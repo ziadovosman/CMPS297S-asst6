@@ -20,16 +20,9 @@ for(unsigned int stride = 0; stride <= BLOCK_DIM; stride *= 2){
 }
 
 
-if(threadIdx.x == 0){
+if(threadIdx.x == BLOCK_DIM -1){
     sum[blockIdx.x] = input[i];
 }
-
-
-
-
-
-
-
 
 
 }
