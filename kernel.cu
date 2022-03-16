@@ -9,13 +9,14 @@ __global__ void reduce_kernel(float* input, float* sum, unsigned int N) {
 unsigned int segment = blockIdx.x*blockDim.x*2;
 //to start at half, we add BLOCK_DIM
 unsigned int i = segment + threadIdx.x + BLOCK_DIM;
-//loop from 0 to BLOCK_DIM
+//loop from 0 to BLOCK_DIM. meaning take from first element until half of the input
+//since the threads start at the middle
 for(unsigned int stride = 0; stride <= BLOCK_DIM; stride *= 2){
     if(threadIdx.x < stride){
         //i - BLOCK_DIM + stride
         input[i] += input[i - BLOCK_DIM + stride];
     }
-    _syncthreads();
+    __syncthreads();
 }
 
 
